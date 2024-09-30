@@ -7,16 +7,17 @@ screen.fill("White")
 pygame.display.update()
 #shapes
 class circles():
-    def __init__(self, color, size):
+    def __init__(self, color, position, radius):
         self.color = color
-        self.size = size
+        self.radius = radius
+        self.position = position
         self.circle_surf = screen
     def draw(self):
-        self.circledraw = pygame.draw.circle(self.circle_surf, self.color, self.size)
+        pygame.draw.circle(self.circle_surf, self.color, self.position, self.radius)
 #creating objects
-Red = circles("red", (100,200,200,50))
-Blue = circles("blue", (250,300,200,100))
-Purple = circles("purple", (300,500,200,50))
+Red = circles("red", (100, 200), 33)
+Blue = circles("blue", (200, 300), 40)
+Purple = circles("purple", (300, 400), 45)
 #important part
 while game:
     for event in pygame.event.get():
@@ -26,4 +27,4 @@ while game:
     Blue.draw()
     Purple.draw()
     pygame.display.update()
-pygame.quit()   
+pygame.quit()     
