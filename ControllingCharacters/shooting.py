@@ -11,8 +11,7 @@ class movinganimals(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image, (100, 100))
         self.rect = self.image.get_rect()
         self.speed = speed
-obj2 = movinganimals("red.png")
-def update(self, key, bulletkey):
+    def update(self, key, bulletkey):
         if key[pygame.K_w]:
             self.rect.move_ip(0,- self.speed)
         if key[pygame.K_a]:
@@ -21,8 +20,6 @@ def update(self, key, bulletkey):
             self.rect.move_ip(+ self.speed,0)
         if key[pygame.K_s]:
             self.rect.move_ip(0,+ self.speed)
-        if bulletkey[pygame.K_space]:
-            obj2.x += 20
         #keeping player in the screen
         if self.rect.left < 0:
             self.rect.left = 0
@@ -34,6 +31,7 @@ def update(self, key, bulletkey):
             self.rect.top = 0
 Spritesg = pygame.sprite.Group()
 def startup():
+    obj2 = movinganimals("red.png")
     obj1 = movinganimals("gojo.png", 3)
     Spritesg.add(obj1)
     while True:
@@ -41,8 +39,8 @@ def startup():
             if event.type == pygame.QUIT:
                 pygame.quit()
         keys = pygame.key.get_pressed()
-        obj1.update(keys)
-        obj2.update(keys)
+        obj1.update(keys, keys)
+        obj2.update(keys, keys)
         screen.blit(pygame.image.load("background.jpg"), (0,0))
         Spritesg.draw(screen)
         pygame.display.update()
