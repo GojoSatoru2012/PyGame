@@ -1,0 +1,42 @@
+import pygame
+import random
+pygame.init()
+screen = pygame.display.set_mode((600, 600))
+screen.fill("Red")
+pygame.display.update()
+subwaysurfer = pygame.image.load("subwaysurfers.png")
+minecraft = pygame.image.load("minecraft.jpg")
+cs2 = pygame.image.load("cs2.jpg")
+templerun = pygame.image.load("templerun.jpg")
+roblox = pygame.image.load("Roblox.jpg")
+screen.blit(subwaysurfer, (150, 100))
+screen.blit(minecraft, (150, 200))
+screen.blit(cs2, (150, 300))
+screen.blit(templerun, (150,400 ))
+screen.blit(roblox, (150, 500))
+font = pygame.font.SysFont("Times New Roman", 35)
+txt1 = font.render("roblox", True, "Blue")
+txt2 = font.render("subway surfer", True, "White")
+txt3 = font.render("templerun", True, "Cyan")
+txt4 = font.render("cs2", True, "Grey")
+txt5 = font.render("minecraft", True, "Black")
+screen.blit(txt1, (300, 100))
+screen.blit(txt2, (300, 200))
+screen.blit(txt3, (300, 300))
+screen.blit(txt4, (300, 400))
+screen.blit(txt5, (300, 500))
+pygame.display.update()
+while True:
+    event = pygame.event.poll()
+    if event.type == pygame.QUIT:
+        pygame.quit()
+    if event.type == pygame.MOUSEBUTTONDOWN:
+        pos = pygame.mouse.get_pos()
+        pygame.draw.circle(screen, "Purple", (pos), 20, 0)
+        pygame.display.update()
+    elif event.type == pygame.MOUSEBUTTONUP:
+        pos2 = pygame.mouse.get_pos()
+        pygame.draw.line(screen, "Yellow", (pos), (pos2), 5)
+        pygame.draw.circle(screen, "Purple", (pos2), 20, 0)
+        pygame.display.update()
+
