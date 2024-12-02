@@ -1,16 +1,20 @@
 import pygame
 import random
-clock = pygame.time.Clock()
+import time
 from pygame.locals import *
+pygame.init()
 running = True
 score = 0
-scorefont = pygame.font.SysFont("sans serif", 19)
+scorefont = pygame.font.SysFont("sans serif", 40)
 text=scorefont.render("Score ="+str(score), True, "yellow")
+clock = pygame.time.Clock()
+starting = time.time()
+timefont = pygame.font.SysFont("Script", 20)
+
 def background(bg):
     bg1  = pygame.image.load(bg)
     bg2 = pygame.transform.scale(bg1, (screen_width, screen_height))
     screen.blit(bg2, (0,0))
-pygame.init()
 pygame.display.set_caption("Donot Litter")
 screen_width = 800
 screen_height = 600
@@ -54,7 +58,7 @@ for i in range(57):
     RandCho.rect.y = random.randint(30, 770)
     allrec.add(RandCho)
     all.add(RandCho)
-for i in range(60):
+for i in range(20):
     obj1 = Plasticbag()
     obj1.rect.x = random.randint(30, 770)
     obj1.rect.y = random.randint(30, 770)
@@ -65,10 +69,21 @@ all.add(can)
 def startup():
     global running
     while running:
+        global text
+        global score
         clock.tick(60)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+        calculator = time.time() - starting 
+        if calculator >= 20:
+            if score >= 10:
+                text=scorefont.render("You win", True, "green")
+            else:
+                text=scorefont.render("You lose", True, "red")
+            screen.blit(text, (400, 300))
+        else:
+            count =
         key1 = pygame.key.get_pressed()
         if key1[pygame.K_w]:
             can.rect.move_ip(0,- can.speed)
@@ -87,7 +102,7 @@ def startup():
             score -= 5
             text=scorefont.render("Score ="+str(score), True, "yellow")
         background("background.jpg")
-        screen.blit(text, (500, 100))
+        screen.blit(text, (600, 10))
         all.draw(screen)
         pygame.display.update()
 startup()
