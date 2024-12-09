@@ -1,4 +1,4 @@
-import pygame
+iimport pygame
 import random
 import time
 from pygame.locals import *
@@ -71,11 +71,12 @@ def startup():
     while running:
         global text
         global score
+        global calculator
         clock.tick(60)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-        calculator = time.time() - starting 
+        calculator = time.time()- starting
         if calculator >= 20:
             if score >= 10:
                 text=scorefont.render("You win", True, "green")
@@ -83,8 +84,9 @@ def startup():
                 text=scorefont.render("You lose", True, "red")
             screen.blit(text, (400, 300))
         else:
+            remaining = 60 - int(calculator)
             count = 60
-            timing = scorefont.render("Time:"+str(60-int(calculator)),True,"white")
+            timing = timefont.render("Time:"+str(remaining),True,"white")
             screen.blit(timing, (20, 10))
             key1 = pygame.key.get_pressed()
             if key1[pygame.K_w]:
@@ -105,6 +107,7 @@ def startup():
                 text=scorefont.render("Score ="+str(score), True, "yellow")
             background("background.jpg")
             screen.blit(text, (600, 10))
+            screen.blit(timing, (20, 10))
             all.draw(screen)
         pygame.display.update()
 startup()
