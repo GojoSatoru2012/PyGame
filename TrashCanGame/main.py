@@ -83,27 +83,29 @@ def startup():
                 text=scorefont.render("You lose", True, "red")
             screen.blit(text, (400, 300))
         else:
-            count =
-        key1 = pygame.key.get_pressed()
-        if key1[pygame.K_w]:
-            can.rect.move_ip(0,- can.speed)
-        if key1[pygame.K_a]:
-            can.rect.move_ip(- can.speed,0)
-        if key1[pygame.K_d]:
-            can.rect.move_ip(+ can.speed,0)
-        if key1[pygame.K_s]:
-            can.rect.move_ip(0,+ can.speed)
-        gcollide = pygame.sprite.spritecollide(can, allrec, True)
-        bcollide = pygame.sprite.spritecollide(can, notrec, True)
-        for i in gcollide:
-            score += 1
-            text=scorefont.render("Score ="+str(score), True, "yellow")
-        for i in bcollide:
-            score -= 5
-            text=scorefont.render("Score ="+str(score), True, "yellow")
-        background("background.jpg")
-        screen.blit(text, (600, 10))
-        all.draw(screen)
+            count = 60
+            timing = scorefont.render("Time:"+str(60-int(calculator)),True,"white")
+            screen.blit(timing, (20, 10))
+            key1 = pygame.key.get_pressed()
+            if key1[pygame.K_w]:
+                can.rect.move_ip(0,- can.speed)
+            if key1[pygame.K_a]:
+                can.rect.move_ip(- can.speed,0)
+            if key1[pygame.K_d]:
+                can.rect.move_ip(+ can.speed,0)
+            if key1[pygame.K_s]:
+                can.rect.move_ip(0,+ can.speed)
+            gcollide = pygame.sprite.spritecollide(can, allrec, True)
+            bcollide = pygame.sprite.spritecollide(can, notrec, True)
+            for i in gcollide:
+                score += 1
+                text=scorefont.render("Score ="+str(score), True, "yellow")
+            for i in bcollide:
+                score -= 5
+                text=scorefont.render("Score ="+str(score), True, "yellow")
+            background("background.jpg")
+            screen.blit(text, (600, 10))
+            all.draw(screen)
         pygame.display.update()
 startup()
 pygame.quit() 
