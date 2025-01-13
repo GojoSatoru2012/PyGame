@@ -21,3 +21,26 @@ plr2 = pygame.image.load("Player2.png")
 bg = pygame.image.load("Background.webp")
 plr1health = 100
 plr2health = 100
+rectangle1 = BORDER = pygame.Rect(600//2 - 5, 0, 10, 800)
+class Player(pygame.sprite.Sprite):
+    def __init__(self, image, angle, x, y):
+        super().__init__()
+        self.image = pygame.transform.rotate(pygame.transform.scale(image, (300,400)),angle)
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+Player1 = Player(plr1, 270, 40, 300)
+Player2 = Player(plr2, 90, 600, 300)
+plrgr = pygame.sprite.Group()
+plrgr.add(Player1)
+plrgr.add(Player2)
+clock = pygame.time.Clock()
+run = True
+while run:
+    clock.tick(60)
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            pygame.quit()
+    plrgr.draw(screen)
+    pygame.display.update()
