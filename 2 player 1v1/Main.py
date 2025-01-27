@@ -22,7 +22,7 @@ bg = pygame.image.load("Background.webp")
 bg = pygame.transform.scale(bg, (800, 600))
 plr1health = 100
 plr2health = 100
-rectangle1 = BORDER = pygame.Rect(825//2 - 5, 0, 10, 800)
+BORDER = pygame.Rect(825//2 - 5, 0, 10, 800)
 class Player(pygame.sprite.Sprite):
     def __init__(self, image, angle, x, y):
         super().__init__()
@@ -34,6 +34,15 @@ class Player(pygame.sprite.Sprite):
         self.rect.move_ip(0,speed)
         if self.rect.top <= 0 or self.rect.bottom >= 620:
             self.rect.move_ip(0,-speed)
+    
+    def move2(self, speed, p):
+        self.rect.x += speed
+        if p == 1:
+            if self.rect.left <= -20 or self.rect.right >= BORDER.left:
+                self.rect.move_ip(-speed, 0)
+        if p == 2:
+            if self.rect.left <= BORDER.right or self.rect.right >= 800:
+                self.rect.move_ip(-speed, 0)
 
 
 Player1 = Player(plr1, 0, 40, 300)
@@ -44,7 +53,7 @@ plrgr.add(Player2)
 clock = pygame.time.Clock()
 def adding():
     screen.blit(bg, (0,0))
-    pygame.draw.rect(screen,"black", rectangle1)
+    pygame.draw.rect(screen,"black", BORDER)
     texthold = font1.render("Health: " + str(plr1health), 1, "Blue")
     texthold2 = font2.render("Health: " + str(plr2health), 1, "Red")
     screen.blit(texthold, (30,10))
@@ -66,6 +75,14 @@ while run:
         Player2.move1(-speed)
     if keypressed[K_DOWN]:
         Player2.move1(speed)
+    if keypressed[K_a]:
+        Player1.move2(-speed, 1)
+    if keypressed[K_d]:
+        Player1.move2(speed, 1)
+    if keypressed[K_RIGHT]: 
+        Player2.move2(speed, 2)
+    if keypressed[K_LEFT]:
+        Player2.move2(-speed, 2)
     adding()
     plrgr.draw(screen)
     pygame.display.update()
