@@ -14,7 +14,9 @@ font2= pygame.font.SysFont("sans serif", 50)
 #variables 
 fps = 60
 speed = 50
-bspeed = 250
+bspeed = 10
+Blubullet = []
+Redbullet = []
 #images
 plr1 = pygame.image.load("Player1.png")
 plr2 = pygame.image.load("Player2.png")
@@ -41,7 +43,7 @@ class Player(pygame.sprite.Sprite):
             if self.rect.left <= -20 or self.rect.right >= BORDER.left:
                 self.rect.move_ip(-speed, 0)
         if p == 2:
-            if self.rect.left <= BORDER.right or self.rect.right >= 800:
+            if self.rect.left <= BORDER.right or self.rect.right >= 850:
                 self.rect.move_ip(-speed, 0)
 
 
@@ -50,6 +52,27 @@ Player2 = Player(plr2, 0, 600, 300)
 plrgr = pygame.sprite.Group()
 plrgr.add(Player1)
 plrgr.add(Player2)
+def Bullet():
+    for bullet in Blubullet:
+        pygame.draw.rect(screen, "red",bullet)
+        bullet.x -= bspeed
+    for bullet in Redbullet:
+        pygame.draw.rect(screen, "blue",bullet)
+        bullet.x += bspeed
+def Damage():
+    global plr1health
+    global plr2health
+    for bullet in Redbullet:
+        if Player1.rect.colliderect(bullet):
+            plr1health -=10
+            pygame.event.post(pygame.event.Event(bluhit))
+    for bullet in Blubullet:
+        if Player2.rect.colliderect(bullet):
+            plr2health -=10
+            pygame.event.post(pygame.event.Event(redhit))
+    
+bluhit = pygame.USEREVENT + 1
+redhit = pygame.USEREVENT + 2
 clock = pygame.time.Clock()
 def adding():
     screen.blit(bg, (0,0))
@@ -65,7 +88,18 @@ while run:
     clock.tick(60)
     for event in pygame.event.get():
         if event.type == QUIT:
-            pygame.quit()
+            run = False
+        if event.type == KEYDOWN:
+            if event.key == K_LSHIFT:
+                bullet = pygame.Rect(Player1.rect.x + Player1.rect.width, Player1.rect.y + Player1.rect.height//2 - 2, 20, 10)
+                Redbullet.append(bullet)
+            if event.key == K_RSHIFT:
+                bullet = pygame.Rect(Player2.rect.x, Player2.rect.y + Player2.rect.height//2 - 2, 20, 10)
+                Blubullet.append(bullet)
+        if event.type == redhit:
+            plr1health -= 10
+        if event.type == bluhit:
+            plr2health -= 10
     keypressed = pygame.key.get_pressed()
     if keypressed[K_w]:
         Player1.move1(-speed)
@@ -85,4 +119,7 @@ while run:
         Player2.move2(-speed, 2)
     adding()
     plrgr.draw(screen)
+    Bullet()
+    Damage()
     pygame.display.update()
+pygame.quit()
