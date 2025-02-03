@@ -11,6 +11,7 @@ c3 = (255, 0, 0)
 c4 = (0, 155, 155)
 font1 = pygame.font.SysFont("Script", 30)
 font2= pygame.font.SysFont("sans serif", 50)
+font3 = pygame.font.SysFont("Script", 65)
 #variables 
 fps = 60
 speed = 50
@@ -63,13 +64,13 @@ def Damage():
     global plr1health
     global plr2health
     for bullet in Redbullet:
-        if Player1.rect.colliderect(bullet):
-            plr1health -=10
-            pygame.event.post(pygame.event.Event(bluhit))
-    for bullet in Blubullet:
         if Player2.rect.colliderect(bullet):
             plr2health -=10
-            pygame.event.post(pygame.event.Event(redhit))
+            Redbullet.remove(bullet)
+    for bullet in Blubullet:
+        if Player1.rect.colliderect(bullet):
+            plr1health -=10
+            Blubullet.remove(bullet)
     
 bluhit = pygame.USEREVENT + 1
 redhit = pygame.USEREVENT + 2
@@ -83,6 +84,11 @@ def adding():
     screen.blit(texthold2, (600,10))
 
 
+def plrwin(text):
+    text1 = font3.render(text, 1, "green")
+    screen.blit(text1, (10, 250))
+    pygame.display.update()
+    pygame.time.delay(6000)
 run = True
 while run:
     clock.tick(60)
@@ -121,5 +127,13 @@ while run:
     plrgr.draw(screen)
     Bullet()
     Damage()
+    if plr2health == 0:
+        hold = "Player1 Has Won The Game!"
+        plrwin(hold)
+        run = False
+    if plr1health == 0:
+        hold2 = "Player2 Has Won The Game!"
+        plrwin(hold2)
+        run = False
     pygame.display.update()
 pygame.quit()
